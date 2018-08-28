@@ -24,7 +24,7 @@ class AppState extends State<App> {
   void fetchImage() async {
     counter++;
     final String url = 'https://jsonplaceholder.typicode.com/photos/$counter';
-    
+
     //get(url)
     //.then((response) { print(response); });
 
