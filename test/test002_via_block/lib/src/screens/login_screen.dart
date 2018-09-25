@@ -90,4 +90,4 @@ class LoginScreenState extends State<LoginScreen> with ValidationMixin {
 
 }
 
-// E:\vid\flutter-stephen-grider\13. Reactive Programming with Dart
+// vid\flutter-stephen-grider\14. Advanced Flutter Architecture - The Bloc Pattern
