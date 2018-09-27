@@ -1,6 +1,6 @@
-# test002
+# test002_via_block
 
-Auth form
+Login screen via BLOC pattern
 
 ## Getting Started
 

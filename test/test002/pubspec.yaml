@@ -1,5 +1,5 @@
-name: test002
-description: Auth form
+name: test002_via_block
+description: Login screen via BLOC pattern
 
 dependencies:
   flutter:
