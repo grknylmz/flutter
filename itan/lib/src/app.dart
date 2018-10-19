@@ -22,12 +22,13 @@ class _AppState extends State<App> {
       title: 'ИТАН',
       theme: new ThemeData(
         primarySwatch: Colors.deepOrange,
+        brightness: Brightness.dark,
       ),
       home: new PaymentsList(),
       routes: <String, WidgetBuilder> {
         '/login': (BuildContext context) => new Login(), // title: 'Auth Home Page'
-        '/list' : (BuildContext context) => new PaymentsList(),
-        '/add': (BuildContext context) => new PaymentAdd(),
+        '/paymentsList' : (BuildContext context) => new PaymentsList(),
+        '/paymentAdd': (BuildContext context) => new PaymentAdd(),
       },
     );
   }

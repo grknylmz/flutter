@@ -1,47 +1,63 @@
+import 'package:rxdart/rxdart.dart';
 // Provider
 import 'bloc_provider.dart';
-// Auth
-import 'package:simple_auth/simple_auth.dart' as simpleAuth;
-import 'package:simple_auth_flutter/simple_auth_flutter.dart';
-export 'package:simple_auth_flutter/simple_auth_flutter.dart';
+// Логика
+import '../models/user.dart';
+import '../resources/repository.dart';
+import 'bloc_payment.dart';
+import 'bloc_dictionary.dart';
+export 'bloc_payment.dart';
+export 'bloc_dictionary.dart';
 
 class ApplicationBloc implements BlocBase {
-  // Vars
-  String _token;
+  // VARS +
+  Repository repository = new Repository();
+  // VARS -
 
-  //
-  // Stream to handle the token
-  //
-  StreamController<String> _tokenController = StreamController<String>();
-  StreamSink<String> get _inAdd => _tokenController.sink;
-  Stream<String> get outToken => _tokenController.stream;
+  // STREAMS +
+  final BehaviorSubject<User> userSubject = BehaviorSubject<User>();
+  Stream<User> get userStream => userSubject.stream;
+  // STREAMS -
 
-  //
-  // Stream to handle the action on the token
-  //
-  StreamController _actionController = StreamController();
-  StreamSink get updToken => _actionController.sink;
+  // LOGIC +
+  final BlocPayment blocPayment = new BlocPayment();
+  //final BlocDictionary blocDictionary = new BlocDictionary();
+  //final BlocCurrentPayment blocCurrentPayment = new BlocCurrentPayment();
+  // LOGIC -
 
   //
   // Constructor
   //
-  ApplicationBloc(){
-    _token = "";
-    _actionController.stream
-        .listen(_getToken);
+  ApplicationBloc() {
+    // Подписываем на потоки
+    userStream.listen((user) => blocPayment.getPayments(user));
+
+    // Функции при старте
+
+    // Прежде чем авторизоваться надо подождать, пока будет установлено подключение к базе данных
+    new Future.delayed(const Duration(seconds: 2), () => login());
   }
 
-  void dispose(){
-    _actionController.close();
-    _tokenController.close();
+  // Авторизуюсь
+  login() async {
+    User user = await repository.fetchUser();
+    if (user == null) return;
+    userSubject.add(user);
   }
 
-  void _handleLogic(data){
-
+  changeAccount() async {
+    // TODO: уничтожение сеанса пользователя
+    logout();
+    // TODO: подождать, пока не разлогинимся
+    login();
   }
 
-  void _getToken(data) async {
-    _token = "123";
-    _inAdd.add(_token);
+  logout() async {
+    repository.logout(userSubject.value);
   }
+
+  dispose() {
+    userSubject.close();
+  }
+
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 export 'bloc_app.dart';
 export 'dart:async';
+export '../models/dictionary.dart';
+export '../models/constant.dart';
+export '../models/payment.dart';
+export '../widgets/widgets.dart';
 
 // Generic Interface for all BLoCs
 abstract class BlocBase {
