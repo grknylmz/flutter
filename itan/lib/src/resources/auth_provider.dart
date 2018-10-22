@@ -1,8 +1,6 @@
-import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:simple_auth/simple_auth.dart' as simpleAuth;  // Auth
-import '../models/constant.dart';  // Константы
-import '../models/user.dart';  // Пользователь
+import '../models/constant.dart';
 
 class AuthProvider {
   // CONSTANTS +

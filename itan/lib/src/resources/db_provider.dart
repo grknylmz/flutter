@@ -1,11 +1,11 @@
 // DB
+import '../models/user.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart';
-import '../models/user.dart';
-export '../models/user.dart';
 import 'dart:async';
+
 
 class DBProvider {
   Database db;
@@ -20,7 +20,7 @@ class DBProvider {
     final String path = join(documentsDirectory.path, 'itan.db');
     db = await openDatabase(
       path,
-      version: 1,
+      version: 4,
       onCreate: (Database newDB, int version) {
         newDB.execute("""
           CREATE TABLE Users
@@ -44,7 +44,7 @@ class DBProvider {
     final List<Map<String, dynamic>> maps = await db.query(
       'Users',
       limit: 1,
-      //orderBy: "creationDate DESC",
+      orderBy: "creationDate DESC",
     );
     if (maps.length != 1) return null;
     final User user = User.fromDB(maps.last);
@@ -53,10 +53,11 @@ class DBProvider {
 
   Future<int> addUser(User user) async {
     Map<String, dynamic> map = user.toMapForDB();
-    return db.insert("Users", map);
+    return db.insert("Users", map, conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   logout(User user) async {
     // TODO: create remove from db
+    db.delete("Users");
   }
 }

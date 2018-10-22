@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'payment_add.dart';
-import '../blocs/bloc_provider.dart';
 import '../models/payment.dart';
+import '../blocs/bloc_provider.dart';
+import '../blocs/bloc_app.dart';
+import '../screens/payment_add.dart';
 
 class PaymentsList extends StatelessWidget {
   static const String routeName = "/paymentsList";
   PaymentsList({Key key}) : super(key: key);
-
-  void initState() {
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +20,10 @@ class PaymentsList extends StatelessWidget {
             onPressed: appBloc.changeAccount,
             icon: Icon(Icons.account_circle),
           ),
-          IconButton(
-            onPressed: null, // appBloc.blocPayment.getPayments,
-            icon: Icon(Icons.refresh),
-          ),
         ],
       ),
       body: StreamBuilder<List<Payment>>(
-        stream: appBloc.blocPayment.paymentsList,
+        stream: appBloc.paymentsListSubject.stream,
         builder: (BuildContext context, AsyncSnapshot<List<Payment>> snapshot) {
           if (snapshot.hasError)
             return Card(
@@ -55,7 +48,7 @@ class PaymentsList extends StatelessWidget {
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
         backgroundColor: Colors.orange,
-        onPressed: null, // () { Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentAdd()), ); },
+        onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentAdd()), ); },  //null,
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_auth/simple_auth.dart' as simpleAuth;
 import 'package:simple_auth_flutter/simple_auth_flutter.dart';
-export 'package:simple_auth_flutter/simple_auth_flutter.dart';
+//export 'package:simple_auth_flutter/simple_auth_flutter.dart';
 
 
 class Login extends StatefulWidget {
@@ -42,8 +42,8 @@ class _LoginState extends State<Login> {
                 try {
                   var user = await googleApi.getUserProfile();
                   String token = googleApi.currentOauthAccount.token;
-                  // showMessage("${user.name} logged in");
-                  // showSnackBar("${user.name} logged in");
+                  showMessage("${user.name} logged in. Token: $token");
+                  //showSnackBar("${user.name} logged in");
                   Navigator.of(context).pushNamed('/list');
                 } catch (e) {
                   showError(e);
@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
   }
 
   void showSnackBar(String text) {
-    var msg = new SnackBar(content: new Text(text),);
+    new SnackBar(content: new Text(text),);
   }
 
   void login(simpleAuth.AuthenticatedApi api) async {

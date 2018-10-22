@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/login.dart';
 import 'screens/payments_list.dart';
 import 'screens/payment_add.dart';
-import 'blocs/bloc_provider.dart';
+import 'package:simple_auth_flutter/simple_auth_flutter.dart';
 
 class App extends StatefulWidget {
   @override

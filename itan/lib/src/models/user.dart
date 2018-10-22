@@ -18,13 +18,13 @@ class User {
 
   Map<String, dynamic> toMapForDB() {
     return <String, dynamic>{
-      "token": token
+        "token": token
       , "code": code
       , "name": name
       , "email": email
       , "picURL": picURL
       , "picBase64": picBase64
-      , "creationDate": 0 // creationDate
+      , "creationDate": new DateTime.now().millisecondsSinceEpoch // creationDate
     };
   }
 
